@@ -1,0 +1,8 @@
+userrr_address:
+  id: 100
+  user_id: 2
+  address: userrr@userrr.userrr
+  is_default: true
+  notify: true
+  created_on: 2006-07-19 19:12:21 +02:00
+  updated_on: 2006-07-19 19:12:21 +02:00
