@@ -1,4 +1,4 @@
-Redmine Mentions
+Redmine Mentions [![Build Status](https://travis-ci.org/efigence/redmine_mentions.svg?branch=master)](https://travis-ci.org/efigence/redmine_mentions)
 ================
 
 Allows users to mention team members in their notes/comments.
@@ -19,6 +19,6 @@ Clone the git repository:
         cd plugins
 	git clone https://github.com/arkhitech/redmine_mentions.git
         
-Restart Redmine
+Restart Redmine 
        
         
