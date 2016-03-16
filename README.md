@@ -1,7 +1,7 @@
 Redmine Mentions [![Build Status](https://travis-ci.org/efigence/redmine_mentions.svg?branch=master)](https://travis-ci.org/efigence/redmine_mentions)
 ================
 
-Allows users to mention team members in their notes/comments.
+Allows users to mention team members in their notes/comments/description.
 
 Functionality
 ==============
