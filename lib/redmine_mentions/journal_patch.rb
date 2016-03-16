@@ -5,7 +5,7 @@ module RedmineMentions
         after_create :send_mail
 
         def send_mail
-          if journalized.is_a?(Issue) # && self.notes.present?
+          if journalized.is_a?(Issue)
             issue = journalized
             project = journalized.project
             users = project.users.to_a.delete_if { |u| (u.type != 'User' || u.mail.empty?) }
@@ -13,7 +13,9 @@ module RedmineMentions
             regex = Regexp.new('\B(' + users_regex + ')\b')
             mentioned_users = notes.scan(regex)
             mentioned_users += issue.root.description.scan(regex)
-            mentioned_users -= details.last.old_value.scan(regex)
+            unless details.empty?
+              mentioned_users -= details.last.old_value.scan(regex)
+            end
             mentioned_users.each do |mentioned_user|
               username = mentioned_user.first[1..-1]
               if user = User.find_by_login(username)
