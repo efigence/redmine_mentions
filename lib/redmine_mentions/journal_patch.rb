@@ -8,18 +8,20 @@ module RedmineMentions
           if journalized.is_a?(Issue)
             issue = journalized
             project = journalized.project
-            users = project.users.to_a.delete_if { |u| (u.type != 'User' || u.mail.empty?) }
+            users = project.users.to_a.delete_if { |u| (u.type != 'User') }
             users_regex = users.collect { |u| "#{Setting.plugin_redmine_mentions['trigger']}#{u.login}" }.join('|')
             regex = Regexp.new('\B(' + users_regex + ')\b')
             mentioned_users = notes.scan(regex)
-            mentioned_users += issue.root.description.scan(regex)
             unless details.empty?
+              mentioned_users += details.last.value.scan(regex)
               mentioned_users -= details.last.old_value.scan(regex)
             end
-            mentioned_users.each do |mentioned_user|
-              username = mentioned_user.first[1..-1]
-              if user = User.find_by_login(username)
-                MentionMailer.notify_mentioning(issue, self, user).deliver
+            unless mentioned_users.empty?
+              mentioned_users.each do |mentioned_user|
+                username = mentioned_user.first[1..-1]
+                if user = User.find_by_login(username)
+                  MentionMailer.notify_mentioning(issue, self, user).deliver
+                end
               end
             end
           end
