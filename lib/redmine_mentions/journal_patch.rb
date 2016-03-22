@@ -11,10 +11,10 @@ module RedmineMentions
             users = project.users.to_a.delete_if { |u| (u.type != 'User') }
             users_regex = users.collect { |u| "#{Setting.plugin_redmine_mentions['trigger']}#{u.login}" }.join('|')
             regex = Regexp.new('\B(' + users_regex + ')\b')
-            mentioned_users = notes.scan(regex)
+            mentioned_users = notes.try(:scan, regex)
             unless details.empty?
-              mentioned_users += details.last.value.scan(regex)
-              mentioned_users -= details.last.old_value.scan(regex)
+              mentioned_users += details.last.value.try(:scan, regex)
+              mentioned_users -= details.last.old_value.try(:scan, regex) unless mentioned_users.empty?
             end
             unless mentioned_users.empty?
               mentioned_users.each do |mentioned_user|
