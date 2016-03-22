@@ -17,7 +17,6 @@ module RedmineMentions
                 mentioned_users += (detail.value.to_s.scan(regex).flatten - detail.old_value.to_s.scan(regex).flatten)
               end
             end
-            binding.pry
             unless mentioned_users.empty?
               mentioned_users.each do |mentioned_user|
                 username = mentioned_user[1..-1]
