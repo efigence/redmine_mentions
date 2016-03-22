@@ -13,7 +13,8 @@ module RedmineMentions
             regex = Regexp.new('\B(' + users_regex + ')\b')
             mentioned_users = notes.try(:scan, regex)
             unless details.empty?
-              mentioned_users += details.last.value.try(:scan, regex)
+              details_last_value = details.last.value.try(:scan, regex)
+              mentioned_users += details_last_value unless details_last_value.blank?
               mentioned_users -= details.last.old_value.try(:scan, regex) unless mentioned_users.empty?
             end
             unless mentioned_users.empty?
